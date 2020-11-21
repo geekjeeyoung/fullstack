@@ -3,4 +3,4 @@
 # ONLY USE "NPM" not "yarn"
 
 Start from
-**0:39:50 Apollo Server Express Setup**
+**1:09:23 Register Resolver**
