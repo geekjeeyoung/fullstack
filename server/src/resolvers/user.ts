@@ -8,6 +8,7 @@ import {
   Mutation,
   Resolver,
   ObjectType,
+  Query,
 } from "type-graphql";
 import { User } from "../entities/User";
 
@@ -38,10 +39,19 @@ class UserResponse {
 
 @Resolver()
 export class UserResolver {
+  @Query(() => User, { nullable: true })
+  async me(@Ctx() { req, em }: MyContext) {
+    if (!req.session.userId) {
+      return null;
+    }
+
+    const user = await em.findOne(User, { id: req.session.userId });
+    return user;
+  }
   @Mutation(() => UserResponse)
   async register(
     @Arg("options") options: UsernamePasswordInput,
-    @Ctx() { em }: MyContext
+    @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
     if (options.username.length <= 2) {
       return {
@@ -85,6 +95,9 @@ export class UserResolver {
         };
       }
     }
+
+    // store user id session, this will set a cookie on the user and keep them logged in
+    req.session.userId = user.id;
 
     return { user };
   }
