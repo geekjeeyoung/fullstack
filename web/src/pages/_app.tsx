@@ -17,6 +17,7 @@ import {
   RegisterMutation,
 } from "../generated/graphql";
 
+// customized UpdateQuery of urql
 function betterUpdateQuery<Result, Query>(
   cache: Cache,
   qi: QueryInput,
