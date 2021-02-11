@@ -10,15 +10,21 @@ require("dotenv-safe/config");
 const Post_1 = require("./entities/Post");
 const User_1 = require("./entities/User");
 const Upvote_1 = require("./entities/Upvote");
+const connect_redis_1 = __importDefault(require("connect-redis"));
+const express_session_1 = __importDefault(require("express-session"));
 const main = async () => {
     const conn = await typeorm_1.createConnection({
         type: "postgres",
         url: process.env.DATABASE_URL,
         logging: true,
         migrations: [path_1.default.join(__dirname, "./migrations/*")],
+        cli: {
+            migrationsDir: "src/migrations",
+        },
         entities: [Post_1.Post, User_1.User, Upvote_1.Upvote],
     });
     const app = express_1.default();
+    const RedisStore = connect_redis_1.default(express_session_1.default);
     app.listen(parseInt(process.env.PORT), () => {
         console.log("server started on localhost:%d", process.env.PORT);
     });

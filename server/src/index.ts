@@ -5,6 +5,8 @@ import "dotenv-safe/config";
 import { Post } from "./entities/Post";
 import { User } from "./entities/User";
 import { Upvote } from "./entities/Upvote";
+import connectRedis from "connect-redis";
+import session from "express-session";
 
 const main = async () => {
   const conn = await createConnection({
@@ -13,12 +15,18 @@ const main = async () => {
     logging: true,
     // synchronize: true,
     migrations: [path.join(__dirname, "./migrations/*")],
+    cli: {
+      migrationsDir: "src/migrations",
+    },
     entities: [Post, User, Upvote],
   });
 
-  //   await conn.runMigrations();
+  // await conn.runMigrations();
 
   const app = express();
+
+  const RedisStore = connectRedis(session);
+
   app.listen(parseInt(process.env.PORT), () => {
     console.log("server started on localhost:%d", process.env.PORT);
   });
