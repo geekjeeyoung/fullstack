@@ -10,6 +10,9 @@ import cors from "cors";
 import { COOKIE_NAME, __prod__ } from "./constants";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
+import { Post } from "./entities/Post";
+import { User } from "./entities/User";
+import { Updoot } from "./entities/Updoot";
 
 const main = async () => {
   const connection = await createConnection({
@@ -17,14 +20,15 @@ const main = async () => {
     url: process.env.DATABASE_URL,
     logging: true,
     migrations: [path.join(__dirname, "./migrations/*")],
-    entities: [], //TODO
+    entities: [Post, User, Updoot],
   });
+
+  // await connection.runMigrations();
 
   const app = express();
 
   const RedisStore = connectRedis(session);
   const redis = new Redis(process.env.REDIS_URL);
-
   app.set("trust proxy", 1);
   app.use(
     cors({
@@ -54,7 +58,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [],
+      resolvers: [], //TODO
       validate: false,
     }),
     context: ({ req, res }) => ({
