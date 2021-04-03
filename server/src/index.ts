@@ -13,12 +13,14 @@ import { buildSchema } from "type-graphql";
 import { Post } from "./entities/Post";
 import { User } from "./entities/User";
 import { Updoot } from "./entities/Updoot";
+import { HelloResolver } from "./resolvers/hello";
 
 const main = async () => {
   const connection = await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL,
     logging: true,
+    synchronize: false,
     migrations: [path.join(__dirname, "./migrations/*")],
     entities: [Post, User, Updoot],
   });
@@ -58,7 +60,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [], //TODO
+      resolvers: [HelloResolver], //TODO
       validate: false,
     }),
     context: ({ req, res }) => ({
