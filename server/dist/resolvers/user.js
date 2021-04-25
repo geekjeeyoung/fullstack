@@ -110,10 +110,12 @@ let UserResolver = class UserResolver {
         });
     }
     me({ req }) {
-        if (!req.session.userId) {
+        if (req.session.userId) {
+            return User_1.User.findOne(req.session.userId);
+        }
+        else {
             return null;
         }
-        return User_1.User.findOne(req.session.userId);
     }
     login(usernameOrEmail, password, { req }) {
         return __awaiter(this, void 0, void 0, function* () {

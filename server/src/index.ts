@@ -1,4 +1,3 @@
-import { MyContext } from "./types";
 import "reflect-metadata";
 import "dotenv-safe/config";
 import { createConnection } from "typeorm";
