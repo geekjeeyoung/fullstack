@@ -1,14 +1,10 @@
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -19,136 +15,149 @@ export type Scalars = {
 };
 
 export type FieldError = {
-  __typename?: "FieldError";
-  field: Scalars["String"];
-  message: Scalars["String"];
+  __typename?: 'FieldError';
+  field: Scalars['String'];
+  message: Scalars['String'];
 };
 
 export type Mutation = {
-  __typename?: "Mutation";
+  __typename?: 'Mutation';
   register: UserResponse;
   login: UserResponse;
-  logout: Scalars["Boolean"];
+  logout: Scalars['Boolean'];
 };
+
 
 export type MutationRegisterArgs = {
   options: UsernamePasswordInput;
 };
 
+
 export type MutationLoginArgs = {
-  password: Scalars["String"];
-  usernameOrEmail: Scalars["String"];
+  password: Scalars['String'];
+  usernameOrEmail: Scalars['String'];
 };
 
 export type Post = {
-  __typename?: "Post";
-  id: Scalars["Float"];
-  title: Scalars["String"];
-  text: Scalars["String"];
-  points: Scalars["Float"];
-  voteStatus?: Maybe<Scalars["Int"]>;
-  creatorId: Scalars["Float"];
+  __typename?: 'Post';
+  id: Scalars['Float'];
+  title: Scalars['String'];
+  text: Scalars['String'];
+  points: Scalars['Float'];
+  voteStatus?: Maybe<Scalars['Int']>;
+  creatorId: Scalars['Float'];
   creator: User;
-  createdAt: Scalars["String"];
-  updatedAt: Scalars["String"];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type Query = {
-  __typename?: "Query";
-  hello: Scalars["String"];
+  __typename?: 'Query';
+  hello: Scalars['String'];
   me?: Maybe<User>;
 };
 
 export type User = {
-  __typename?: "User";
-  id: Scalars["Float"];
-  username: Scalars["String"];
-  email: Scalars["String"];
-  password: Scalars["String"];
+  __typename?: 'User';
+  id: Scalars['Float'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
   posts: Post;
-  createdAt: Scalars["String"];
-  updatedAt: Scalars["String"];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type UserResponse = {
-  __typename?: "UserResponse";
+  __typename?: 'UserResponse';
   errors?: Maybe<Array<FieldError>>;
   user?: Maybe<User>;
 };
 
 export type UsernamePasswordInput = {
-  email: Scalars["String"];
-  username: Scalars["String"];
-  password: Scalars["String"];
+  email: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
 };
 
-export type RegularErrorFragment = { __typename?: "FieldError" } & Pick<
-  FieldError,
-  "field" | "message"
->;
+export type RegularErrorFragment = (
+  { __typename?: 'FieldError' }
+  & Pick<FieldError, 'field' | 'message'>
+);
 
-export type RegularUserFragment = { __typename?: "User" } & Pick<
-  User,
-  "id" | "username" | "email" | "password"
->;
+export type RegularUserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'username' | 'email' | 'password'>
+);
 
-export type RegularUserResponseFragment = { __typename?: "UserResponse" } & {
-  errors?: Maybe<Array<{ __typename?: "FieldError" } & RegularErrorFragment>>;
-  user?: Maybe<{ __typename?: "User" } & RegularUserFragment>;
-};
+export type RegularUserResponseFragment = (
+  { __typename?: 'UserResponse' }
+  & { errors?: Maybe<Array<(
+    { __typename?: 'FieldError' }
+    & RegularErrorFragment
+  )>>, user?: Maybe<(
+    { __typename?: 'User' }
+    & RegularUserFragment
+  )> }
+);
 
 export type RegisterMutationVariables = Exact<{
   options: UsernamePasswordInput;
 }>;
 
-export type RegisterMutation = { __typename?: "Mutation" } & {
-  register: { __typename?: "UserResponse" } & RegularUserResponseFragment;
-};
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type RegisterMutation = (
+  { __typename?: 'Mutation' }
+  & { register: (
+    { __typename?: 'UserResponse' }
+    & RegularUserResponseFragment
+  ) }
+);
 
-export type MeQuery = { __typename?: "Query" } & {
-  me?: Maybe<{ __typename?: "User" } & RegularUserFragment>;
-};
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & RegularUserFragment
+  )> }
+);
 
 export const RegularErrorFragmentDoc = gql`
-  fragment RegularError on FieldError {
-    field
-    message
-  }
-`;
+    fragment RegularError on FieldError {
+  field
+  message
+}
+    `;
 export const RegularUserFragmentDoc = gql`
-  fragment RegularUser on User {
-    id
-    username
-    email
-    password
-  }
-`;
+    fragment RegularUser on User {
+  id
+  username
+  email
+  password
+}
+    `;
 export const RegularUserResponseFragmentDoc = gql`
-  fragment RegularUserResponse on UserResponse {
-    errors {
-      ...RegularError
-    }
-    user {
-      ...RegularUser
-    }
+    fragment RegularUserResponse on UserResponse {
+  errors {
+    ...RegularError
   }
-  ${RegularErrorFragmentDoc}
-  ${RegularUserFragmentDoc}
-`;
+  user {
+    ...RegularUser
+  }
+}
+    ${RegularErrorFragmentDoc}
+${RegularUserFragmentDoc}`;
 export const RegisterDocument = gql`
-  mutation Register($options: UsernamePasswordInput!) {
-    register(options: $options) {
-      ...RegularUserResponse
-    }
+    mutation Register($options: UsernamePasswordInput!) {
+  register(options: $options) {
+    ...RegularUserResponse
   }
-  ${RegularUserResponseFragmentDoc}
-`;
-export type RegisterMutationFn = Apollo.MutationFunction<
-  RegisterMutation,
-  RegisterMutationVariables
->;
+}
+    ${RegularUserResponseFragmentDoc}`;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
 
 /**
  * __useRegisterMutation__
@@ -167,32 +176,20 @@ export type RegisterMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useRegisterMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    RegisterMutation,
-    RegisterMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(
-    RegisterDocument,
-    options
-  );
-}
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = Apollo.BaseMutationOptions<
-  RegisterMutation,
-  RegisterMutationVariables
->;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const MeDocument = gql`
-  query Me {
-    me {
-      ...RegularUser
-    }
+    query Me {
+  me {
+    ...RegularUser
   }
-  ${RegularUserFragmentDoc}
-`;
+}
+    ${RegularUserFragmentDoc}`;
 
 /**
  * __useMeQuery__
@@ -209,18 +206,14 @@ export const MeDocument = gql`
  *   },
  * });
  */
-export function useMeQuery(
-  baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
-export function useMeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;

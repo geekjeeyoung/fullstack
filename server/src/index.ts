@@ -1,10 +1,10 @@
+import { MyContext } from "./types";
 import "reflect-metadata";
 import "dotenv-safe/config";
 import { createConnection } from "typeorm";
 import path from "path";
 import express from "express";
 import connectRedis from "connect-redis";
-import session from "express-session";
 import Redis from "ioredis";
 import cors from "cors";
 import { COOKIE_NAME, __prod__ } from "./constants";
@@ -15,6 +15,7 @@ import { User } from "./entities/User";
 import { Updoot } from "./entities/Updoot";
 import { HelloResolver } from "./resolvers/hello";
 import { UserResolver } from "./resolvers/user";
+import session from "express-session";
 
 const main = async () => {
   const connection = await createConnection({
@@ -26,7 +27,7 @@ const main = async () => {
     entities: [Post, User, Updoot],
   });
 
-  // await connection.runMigrations();
+  await connection.runMigrations();
 
   const app = express();
 
