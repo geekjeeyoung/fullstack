@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FirstMigration1617457166316 = void 0;
 class FirstMigration1617457166316 {
     constructor() {
-        this.name = 'FirstMigration1617457166316';
+        this.name = "FirstMigration1617457166316";
     }
     up(queryRunner) {
         return __awaiter(this, void 0, void 0, function* () {

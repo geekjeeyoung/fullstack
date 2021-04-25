@@ -31,14 +31,18 @@ const main = async () => {
   const app = express();
 
   const RedisStore = connectRedis(session);
+
   const redis = new Redis(process.env.REDIS_URL);
+
   app.set("trust proxy", 1);
+
   app.use(
     cors({
-      origin: process.env.CORS_ORIGIN,
+      origin: process.env.CORS_ORIGIN, // client와 연결
       credentials: true,
     })
   );
+
   app.use(
     session({
       name: COOKIE_NAME,
@@ -46,6 +50,7 @@ const main = async () => {
         client: redis,
         disableTouch: true,
       }),
+
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
         httpOnly: true,
@@ -53,8 +58,11 @@ const main = async () => {
         secure: __prod__,
         domain: __prod__ ? ".codeponder.com" : undefined,
       },
+
       saveUninitialized: false,
+
       secret: process.env.SESSION_SECRET,
+
       resave: false,
     })
   );
@@ -64,6 +72,7 @@ const main = async () => {
       resolvers: [HelloResolver, UserResolver], //TODO
       validate: false,
     }),
+
     context: ({ req, res }) => ({
       req,
       res,
